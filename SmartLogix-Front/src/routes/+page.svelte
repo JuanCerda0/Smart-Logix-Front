@@ -1,6 +1,4 @@
-<script>
-	let string = `MUNDO!!!`;
-
+<script lang="ts">
     import Topbar from '$lib/components/layout/TopBar/topbar.svelte'
 
     const links = [
@@ -10,11 +8,14 @@
         { label: 'Contacto',  href: '/contacto'  },
     ]
 
-    function handleNav(e) {
-        console.log('Navegando a:', e.detail.href)
+    // 1. Le decimos a TypeScript qué forma tiene "e"
+    // 2. Usamos e.href directamente en lugar de e.detail.href
+    function handleNav(e: { href: string; label: string }) {
+        console.log('Navegando a:', e.href)
     }
-
 </script>
+
+<Topbar onnavigate={handleNav} />
 
 <style>
     main {
@@ -23,20 +24,16 @@
 </style>
 
 <main>
+    <Topbar {links} sticky onnavigate={handleNav}>
 
-    <Topbar> <!--{links} sticky on:navigate={handleNav}>-->
+        {#snippet logo()}
+            <img src="/logo.svg" alt="MiApp" height="28" />
+        {/snippet}
 
-        <!--<img slot="logo" src="/logo.svg" alt="MiApp" height="28" />-->
-
-        <div slot="actions">
+        {#snippet actions()}
             <button>Ingresar</button>
             <button>Registrarse</button>
-        </div>
+        {/snippet}
 
     </Topbar>   
-
-    <h1>Welcome to SvelteKit</h1>
-    <p>Visit <a href="https://svelte.dev/docs/kit">svelte.dev/docs/kit</a> to read the documentation</p>
-    <p>Hola {string}</p>
-
 </main>

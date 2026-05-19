@@ -1,52 +1,54 @@
-<script>
-  /* export let logo = 'MiApp'
-   export let links = [] */
-  export let sticky = false
+<script lang="ts">
+  import type { Snippet } from 'svelte';
 
-  import { createEventDispatcher } from 'svelte'
-  const dispatch = createEventDispatcher()
-  
-  function handleNav(link) {
-    dispatch('navigate', { href: link.href, label: link.label })
-    }
+  interface Props {
+    sticky?: boolean;
+    links?: Array<{ label: string; href: string; active?: boolean }>; 
+    onnavigate?: (link: { href: string; label: string }) => void;
     
+    logo?: Snippet;
+    actions?: Snippet;
+  }
+
+  let { sticky = false, links = [], onnavigate, logo, actions }: Props = $props();
+
+  function handleNav(link: { href: string, label: string }) {
+    if (onnavigate) {
+      onnavigate({ href: link.href, label: link.label });
+    }
+  }
 </script>
 
 <nav class:sticky>
 
-  <!-- Zona izquierda: logo -->
   <a class="logo" href="/">
-  <!--
-    <slot name="logo">
-      <div class="logo-icon">
-        <svg .../>
-      </div>
-      <span class="logo-name">{logo}</span>
-    </slot>
-    1-->
-    <h1>Logo</h1>
+    {#if logo}
+      {@render logo()}
+    {:else}
+      <h1>Logo</h1>
+    {/if}
   </a>
 
-  <!-- Centro: enlaces -->
   <div class="nav-links">
-  <!--
     {#each links as link}
-      
+      <a 
         href={link.href}
         class="nav-link"
         class:active={link.active}
-        on:click|preventDefault={() => handleNav(link)}
-      <a>
+        onclick={(e) => {
+          e.preventDefault();
+          handleNav(link);
+        }}
+      >
         {link.label}
       </a>
     {/each}
-    -->
-    <h1>Enlaces</h1>
   </div>
 
-  <!-- Zona derecha: acciones -->
   <div class="nav-actions">
-    <slot name="actions" />
+    {#if actions}
+      {@render actions()}
+    {/if}
   </div>
 
 </nav>
