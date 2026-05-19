@@ -1,0 +1,63 @@
+/* Archivo: src/lib/assets/global.css */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+  /* =========================================
+     PALETA DE COLORES (Tema Azul / Hielo)
+  ========================================= */
+  
+  /* Fondos */
+  --color-fondo-principal: #F0F4F8; /* Azul Hielo: Fondo de la página */
+  --color-fondo-secundario: #BCCCDC; /* Azul Aire: Tarjetas, secciones destacadas */
+  
+  /* Textos y Bordes */
+  --color-texto-principal: #243B53;  /* Azul Marino: Títulos y texto principal (alta legibilidad) */
+  --color-texto-secundario: #627D98; /* Azul Acero: Subtítulos, iconos y bordes */
+  
+  /* Acciones / Botones */
+  --color-accion: #48BB78;       /* Azul Eléctrico (Esmeralda): Botón de compra / Resaltes */
+  --color-accion-hover: #38a169; /* Un tono ligeramente más oscuro para cuando pasas el mouse */
+
+  /* =========================================
+     TIPOGRAFÍA Y EXTRAS
+  ========================================= */
+  --fuente-principal: 'Inter', system-ui, sans-serif;
+  --radio-borde: 8px;
+  --sombra-tarjeta: 0 4px 6px -1px rgba(36, 59, 83, 0.1); /* Sombra teñida ligeramente de Azul Marino */
+}
+
+/* Aplicamos los estilos base a todo el documento */
+body {
+  margin: 0;
+  padding: 0;
+  background-color: var(--color-fondo-principal);
+  color: var(--color-texto-principal);
+  font-family: var(--fuente-principal);
+}
+
+/* Clases de utilidad opcionales:
+  Puedes usar estas clases directamente en tu HTML sin tener que escribir CSS extra 
+*/
+.tarjeta {
+  background-color: var(--color-fondo-secundario);
+  border: 1px solid var(--color-texto-secundario);
+  border-radius: var(--radio-borde);
+  padding: 20px;
+  box-shadow: var(--sombra-tarjeta);
+}
+
+.btn-comprar {
+  background-color: var(--color-accion);
+  color: white; /* El texto blanco contrasta perfecto con el #48BB78 */
+  border: none;
+  border-radius: var(--radio-borde);
+  padding: 10px 24px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.btn-comprar:hover {
+  background-color: var(--color-accion-hover);
+}

@@ -20,7 +20,6 @@
 </script>
 
 <nav class:sticky>
-
   <a class="logo" href="/">
     {#if logo}
       {@render logo()}
@@ -30,7 +29,7 @@
   </a>
 
   <div class="nav-links">
-    {#each links as link}
+    {#each links as link (link.href)}
       <a 
         href={link.href}
         class="nav-link"
@@ -51,7 +50,7 @@
     {/if}
   </div>
 
-</nav>
+  </nav>
 
 <style>
   nav {
