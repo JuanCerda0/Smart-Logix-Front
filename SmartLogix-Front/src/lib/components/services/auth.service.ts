@@ -1,6 +1,6 @@
 // src/lib/services/auth.service.ts
 import type { LoginRequestDTO, AuthResponseDTO } from '$lib/components/types/auth.dto';
-const API_URL = 'http://localhost:8080/api/auth'; // Ruta base de tu AuthController
+const API_URL = 'http://localhost:8080/api/auth'; // No se me puede olvidar el puerto
 
 export const authService = {
     async login(credentials: LoginRequestDTO): Promise<AuthResponseDTO> {
@@ -11,7 +11,7 @@ export const authService = {
         });
 
         if (!response.ok) {
-            // Aquí puedes manejar errores específicos de tu backend
+            // luego agregare el manerjo de errores más detallado
             throw new Error('Error de autenticación');
         }
 

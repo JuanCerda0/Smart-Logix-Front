@@ -20,7 +20,9 @@
         {/snippet}
 
         {#snippet actions()}
-            <button class="btn-comprar">Ingresar</button>
+            <a href="/login" class="btn-comprar" style="text-decoration: none; text-align: center;">
+                Ingresar
+            </a>
             <button class="btn-comprar">Registrarse</button>
         {/snippet}
     </Topbar>   
