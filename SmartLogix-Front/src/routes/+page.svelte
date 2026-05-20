@@ -1,15 +1,17 @@
 <script lang="ts">
-    import Topbar from '$lib/components/layout/TopBar/topbar.svelte'
+    import Topbar from '$lib/components/layout/TopBar/topbar.svelte';
+    import { goto } from '$app/navigation'; 
 
     const links = [
         { label: 'Inicio',    href: '/',         active: true },
-        { label: 'Productos', href: '/productos' },
+        { label: 'Productos', href: '/products' },
         { label: 'Blog',      href: '/blog'      },
         { label: 'Contacto',  href: '/contacto'  },
     ]
 
     function handleNav(e: { href: string; label: string }) {
-        console.log('Navegando a:', e.href)
+        console.log('Navegando a:', e.href);
+        goto(e.href);
     }
 </script>
 
