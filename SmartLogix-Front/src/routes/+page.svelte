@@ -22,8 +22,11 @@
         {#snippet actions()}
             <a href="/login" class="btn-comprar" style="text-decoration: none; text-align: center;">
                 Ingresar
+            </a >
+            
+             <a href="/register" class="btn-comprar" style="text-decoration: none; text-align: center;">
+                Registrarse
             </a>
-            <button class="btn-comprar">Registrarse</button>
         {/snippet}
     </Topbar>   
     
