@@ -14,3 +14,10 @@ export interface AuthResponseDTO {
     tokenType: string;
     expiresIn: number;
 }
+
+export interface RegisterRequestDTO {
+    username: string;
+    email: string;      // Nuevo campo para registro
+    password: string;
+    fullName: string;   // Útil para la gestión logística personalizada
+}
