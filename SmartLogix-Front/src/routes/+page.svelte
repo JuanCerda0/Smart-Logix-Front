@@ -18,7 +18,7 @@
 <main>
     <Topbar {links} sticky onnavigate={handleNav}>
         {#snippet logo()}
-            <img src="/logo.svg" alt="MiApp" height="28" />
+            <img src="/logo.svg" alt="SmartLogix" height="28" />
         {/snippet}
 
         {#snippet actions()}
