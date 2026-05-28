@@ -31,6 +31,10 @@
             </a>
         {/snippet}
     </Topbar>   
-    
-    <h1>Bienvenido a Smart-Logix</h1>
+    <div class="titulo">
+
+        <h1>Bienvenido a SmartLogix</h1>
+        <p>La opción más inteligente para comprar</p>
+
+    </div>
 </main>

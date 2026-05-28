@@ -28,6 +28,15 @@
 }
 
 /* Aplicamos los estilos base a todo el documento */
+main {
+  background-image: url('./img/background.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  position: relative;
+}
+
 body {
   margin: 0;
   padding: 0;
@@ -57,4 +66,23 @@ body {
 
 .btn-comprar:hover {
   background-color: var(--color-accion-hover);
+}
+
+.titulo {
+  position: absolute;
+  bottom: 2rem;
+  left: 2rem;
+  background-color: rgba(36, 59, 83, 0.65);
+  padding: 1rem 1.5rem;
+  border-radius: var(--radio-borde);
+  backdrop-filter: blur(4px);
+}
+
+.titulo h1 {
+  color : var(--color-fondo-principal);
+}
+
+.titulo p {
+  color : var(--color-fondo-principal);
+  opacity: 0.9;
 }
