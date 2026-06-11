@@ -3,9 +3,9 @@
     import { goto } from '$app/navigation'; 
 
     const links = [
-        { label: 'Inicio',    href: '/',         active: true },
+        { label: 'Inicio',    href: '/',active: true },
         { label: 'Productos', href: '/products' },
-        { label: 'Blog',      href: '/blog'      },
+        { label: 'Nosotros',  href: '/nosotros' },
         { label: 'Contacto',  href: '/contacto'  },
     ]
 
@@ -31,6 +31,10 @@
             </a>
         {/snippet}
     </Topbar>   
-    
-    <h1>Bienvenido a Smart-Logix</h1>
+    <div class="titulo">
+
+        <h1>Bienvenido a SmartLogix</h1>
+        <p>Mejorar es smart</p>
+
+    </div>
 </main>
