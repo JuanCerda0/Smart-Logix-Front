@@ -3,9 +3,9 @@
     import { goto } from '$app/navigation'; 
 
     const links = [
-        { label: 'Inicio',    href: '/',         active: true },
+        { label: 'Inicio',    href: '/',active: true },
         { label: 'Productos', href: '/products' },
-        { label: 'Blog',      href: '/blog'      },
+        { label: 'Nosotros',  href: '/nosotros' },
         { label: 'Contacto',  href: '/contacto'  },
     ]
 
@@ -34,7 +34,7 @@
     <div class="titulo">
 
         <h1>Bienvenido a SmartLogix</h1>
-        <p>La opción más inteligente para comprar</p>
+        <p>Mejorar es smart</p>
 
     </div>
 </main>

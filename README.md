@@ -1,51 +1,42 @@
-# SmartLogix - Grupo 9
-**Plataforma de Gestión Logística para eCommerce**
+# sv
 
----
+Everything you need to build a Svelte project, powered by [`sv`](https://github.com/sveltejs/cli).
 
-## Descripción
+## Creating a project
 
-SmartLogix es un proyecto enfocado en el desarrollo de una plataforma para mejorar la gestión logística de pequeñas y medianas empresas de comercio electrónico.
+If you're seeing this, you've probably already done this step. Congrats!
 
-Surge como respuesta a las limitaciones actuales de muchos negocios, que aún dependen de procesos manuales o sistemas poco flexibles para manejar inventarios, pedidos y envíos.
+```sh
+# create a new project
+npx sv create my-app
+```
 
----
+To recreate this project with the same configuration:
 
-## Problema
+```sh
+# recreate this project
+npx sv@0.15.2 create --template minimal --types ts --add prettier eslint vitest="usages:unit,component" --install npm SmartLogix-Front
+```
 
-Las PYMEs de eCommerce suelen enfrentar:
+## Developing
 
-- Desorden en la gestión de inventario  
-- Errores en el procesamiento de pedidos  
-- Retrasos en envíos  
-- Dificultad para escalar operaciones  
+Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
 
-Esto impacta directamente en la eficiencia y en la experiencia del cliente.
+```sh
+npm run dev
 
----
+# or start the server and open the app in a new browser tab
+npm run dev -- --open
+```
 
-## Objetivo
+## Building
 
-Desarrollar una solución que permita:
+To create a production version of your app:
 
-- Centralizar la operación logística  
-- Reducir errores manuales  
-- Mejorar la organización y seguimiento de procesos  
-- Facilitar el crecimiento del negocio  
+```sh
+npm run build
+```
 
----
+You can preview the production build with `npm run preview`.
 
-## Alcance Inicial
-
-El proyecto considera abordar:
-
-- Inventario  
-- Pedidos  
-- Envíos  
-- Gestión básica de usuarios  
-
----
-
-## Estado del Proyecto
-
-En etapa inicial de definición y diseño.
+> To deploy your app, you may need to install an [adapter](https://svelte.dev/docs/kit/adapters) for your target environment.
