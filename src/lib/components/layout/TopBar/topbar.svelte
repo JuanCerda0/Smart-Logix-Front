@@ -1,12 +1,12 @@
 <script lang="ts">
   import type { Snippet } from 'svelte';
+  import defaultLogo from '$lib/assets/img/logo.png'; 
 
   interface Props {
     sticky?: boolean;
     links?: Array<{ label: string; href: string; active?: boolean }>; 
     onnavigate?: (link: { href: string; label: string }) => void;
-    
-    logo?: Snippet;
+    logo?: Snippet; 
     actions?: Snippet;
   }
 
@@ -20,11 +20,11 @@
 </script>
 
 <nav class:sticky>
-  <a class="logo" href="/">
+  <a class="logo-container" href="/">
     {#if logo}
       {@render logo()}
     {:else}
-      <h1>Logo</h1>
+      <img src={defaultLogo} alt="Logo" class="topbar-logo" />
     {/if}
   </a>
 
@@ -49,8 +49,7 @@
       {@render actions()}
     {/if}
   </div>
-
-  </nav>
+</nav>
 
 <style>
   nav {
@@ -69,13 +68,19 @@
     z-index: 100;
   }
 
-  .logo {
+  .logo-container {
     display: flex;
     align-items: center;
     gap: 10px;
     text-decoration: none;
     font-weight: 600;
     color: #111;
+  }
+
+  .topbar-logo {
+    height: 32px; /* Ajusta esto al tamaño que necesites */
+    width: auto;
+    object-fit: contain;
   }
 
   .nav-links {

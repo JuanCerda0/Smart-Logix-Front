@@ -4,19 +4,16 @@
     import { productService } from '$lib/components/services/product.service';
     import type { ProductResponseDTO } from '$lib/components/types/product.dto';
     
-    // --- Nuevos imports para la Topbar ---
     import Topbar from '$lib/components/layout/TopBar/topbar.svelte';
     import { goto } from '$app/navigation';
 
-    // Estados usando Runas
     let products = $state<ProductResponseDTO[]>([]);
     let isLoading = $state(true);
     let error = $state('');
 
-    // --- Configuración de la Topbar ---
     const links = [
         { label: 'Inicio',    href: '/' },
-        { label: 'Productos', href: '/products', active: true }, // Marcamos Productos como activo
+        { label: 'Productos', href: '/products', active: true },
         { label: 'Blog',      href: '/blog'      },
         { label: 'Contacto',  href: '/contacto'  },
     ];
@@ -47,7 +44,7 @@
 
 <Topbar {links} sticky onnavigate={handleNav}>
     {#snippet logo()}
-        <img src="/logo.svg" alt="MiApp" height="28" />
+        <img src="/logo.png" alt="SmartLogix" height="28" />
     {/snippet}
 
     {#snippet actions()}
