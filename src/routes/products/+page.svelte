@@ -14,9 +14,9 @@
     const links = [
         { label: 'Inicio',    href: '/' },
         { label: 'Productos', href: '/products', active: true },
-        { label: 'Blog',      href: '/blog'      },
+        { label: 'Nosotros',  href: '/nosotros' },
         { label: 'Contacto',  href: '/contacto'  },
-    ];
+    ]
 
     function handleNav(e: { href: string; label: string }) {
         goto(e.href);
