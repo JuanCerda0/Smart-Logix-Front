@@ -6,8 +6,8 @@
     const links = [
         { label: 'Inicio',    href: '/' },
         { label: 'Productos', href: '/products' },
-        { label: 'Nosotros',  href: '/nosotros', active: true },
-        { label: 'Contacto',  href: '/contacto'  },
+        { label: 'Nosotros',  href: '/nosotros' },
+        { label: 'Contacto',  href: '/contacto', active: true },
     ]
 
     function handleNav(e: { href: string; label: string }) {
