@@ -13,6 +13,11 @@
 
     const carouselInfo = [
         {
+            tag: 'Recuerdo',
+            title: 'Modificaciones',
+            description: 'Si no cambie este mensaje significa que no avance una fegada srry'
+        },
+        {
             tag: 'Novedad',
             title: 'Ya poseemos un carrusel',
             description: 'Ya está disponible el nuevo carrusel al deslizar la pantalla, ya deberias estar viendolo.'
@@ -26,11 +31,6 @@
             tag: 'Tip',
             title: 'Accede a beneficios exclusivos',
             description: 'Recuerda crear tu usuario para poder acceder a todos nuestros beneficios.'
-        },
-        {
-            tag: 'Recuerdo',
-            title: 'Modificaciones',
-            description: 'Si no cambie este mensaje significa que no avance una fegada srry'
         }
     ];
 
