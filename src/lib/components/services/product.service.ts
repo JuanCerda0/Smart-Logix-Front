@@ -1,7 +1,8 @@
 // src/lib/services/product.service.ts
+import { env } from '$env/dynamic/public';
 import type { ProductResponseDTO, ProductRequestDTO, StockUpdateRequestDTO } from '$lib/components/types/product.dto';
 
-const API_URL = 'http://localhost:8080/api/products';
+const API_URL = `${env.PUBLIC_API_URL || 'http://localhost:8080/api'}/products`;
 
 // Función auxiliar para obtener los headers con el JWT automáticamente
 function getHeaders(): HeadersInit {

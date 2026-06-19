@@ -1,6 +1,8 @@
 // src/lib/services/auth.service.ts
+import { env } from '$env/dynamic/public';
 import type { LoginRequestDTO, AuthResponseDTO, RegisterRequestDTO } from '$lib/components/types/auth.dto';
-const API_URL = 'http://localhost:8080/api/auth'; 
+
+const API_URL = `${env.PUBLIC_API_URL || 'http://localhost:8080/api'}/auth`;
 
 export const authService = {
     async login(credentials: LoginRequestDTO): Promise<AuthResponseDTO> {

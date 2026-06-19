@@ -82,7 +82,7 @@ docker build -t smartlogix-front .
 Ejecuta el contenedor:
 
 ```sh
-docker run --rm -p 3000:3000 \
+docker run --rm -p 5173:5173 \
   -e PUBLIC_API_URL=http://localhost:8080/api \
   smartlogix-front
 ```
