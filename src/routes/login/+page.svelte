@@ -1,31 +1,44 @@
 <script lang="ts">
     import LoginForm from '$lib/components/auth/LoginForm.svelte';
-    import { authService } from '$lib/components/services/auth.service'; 
-    import type { LoginRequestDTO } from '$lib/components/types/auth.dto'; 
+    import { authStore } from '$lib/store/auth';
+    import { api } from '$lib/api/client';
     import { goto } from '$app/navigation';
+    import '../lib/assets/global.css';
 
     let error = $state('');
 
+    let currentTenant = $state('empresa1'); 
+
     async function handleLogin(username: string, password: string) {
         error = ''; 
-        try {
-            // Creamos el objeto usando el DTO explícitamente
-            const credentials: LoginRequestDTO = { username, password };
-            
-            // Pasamos las credenciales ya tipadas al servicio
-            const response = await authService.login(credentials);
-            
-            localStorage.setItem('token', response.token);
-            goto('/');
-        } catch (e) { // Quitamos el ': any'
-            // Comprobamos de forma segura si el error capturado es un objeto Error
-            if (e instanceof Error) {
-                error = e.message;
+        
+        // 1. Seteamos provisionalmente el tenant en el store para que el cliente configure la ruta del login
+        authStore.tenant = currentTenant;
+
+        // 2. Ejecutamos la petición POST usando nuestro cliente API unificado
+        const res = await api.post('/auth/login', { username, password }, true);
+
+        if (res.error) {
+            // Manejo de errores basado en el payload de validación del BFF
+            if (res.status === 401) {
+                error = res.data?.message || 'Usuario o contraseña incorrectos';
             } else {
-                error = 'Error al conectar con el servidor';
+                error = res.message || 'Error al conectar con el servidor';
             }
+            return;
         }
+
+        // 3. Si la respuesta es exitosa, guardamos en el store reactivo
+        // El BFF devuelve { token, tokenType, expiresIn, tenant }
+        const { token, tenant } = res.data;
+        
+        authStore.login(token, tenant);
+        
+        // 4. Redirección al panel principal
+        goto('/');
     }
+
+    let { children } = $props();
 </script>
 
 <main class="login-page">
@@ -41,3 +54,5 @@
         background-color: var(--color-fondo);
     }
 </style>
+
+{@render children()}
