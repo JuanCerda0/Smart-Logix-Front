@@ -17,13 +17,13 @@ WORKDIR /app/build
 
 ENV NODE_ENV=production
 ENV HOST=0.0.0.0
-ENV PORT=3000
+ENV PORT=5173
 
 COPY --from=build /app/build ./
 RUN cp -r client server/chunks/client
 
 USER node
 
-EXPOSE 3000
+EXPOSE 5173
 
 CMD ["node", "index.js"]
