@@ -1,24 +1,36 @@
 <script lang="ts">
-    // Recibimos la función de login y el mensaje de error como props
     let { onLogin, errorMessage } = $props();
     
+    let tenant = $state(''); // ✨ CRÍTICO: Necesario para la ruta multi-tenant del BFF
     let username = $state('');
     let password = $state('');
 
     function handleSubmit(e: Event) {
         e.preventDefault();
-        onLogin(username, password);
+        // Pasamos los 3 datos al manejador del componente padre
+        onLogin(tenant.trim(), username.trim(), password);
     }
 </script>
 
 <div class="login-card tarjeta">
     <form onsubmit={handleSubmit}>
         <h2>Bienvenido</h2>
-        <p class="subtitle">Ingresa tus credenciales para continuar</p>
+        <p class="subtitle">Ingresa tus credenciales logísticas para continuar</p>
 
         {#if errorMessage}
             <div class="error-badge">{errorMessage}</div>
         {/if}
+
+        <div class="form-group">
+            <label for="tenant">Empresa / Tenant</label>
+            <input 
+                type="text" 
+                id="tenant" 
+                bind:value={tenant} 
+                placeholder="Ej: empresa1" 
+                required 
+            />
+        </div>
 
         <div class="form-group">
             <label for="username">Usuario</label>
@@ -26,7 +38,7 @@
                 type="text" 
                 id="username" 
                 bind:value={username} 
-                placeholder="Ej: jsmith" 
+                placeholder="Ej: admin" 
                 required 
             />
         </div>
