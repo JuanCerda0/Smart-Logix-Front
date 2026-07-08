@@ -1,6 +1,6 @@
 /* Archivo: src/lib/assets/global.css */
 
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
 :root {
   /* =========================================
@@ -9,15 +9,22 @@
   
   /* Fondos */
   --color-fondo-principal: #F0F4F8; /* Azul Hielo: Fondo de la página */
-  --color-fondo-secundario: #BCCCDC; /* Azul Aire: Tarjetas, secciones destacadas */
+  --color-fondo-secundario: #FFFFFF; /* ✨ OPTIMIZADO: Blanco puro para alta legibilidad en el cuerpo de tarjetas */
+  --color-fondo-decorativo: #BCCCDC; /* Azul Aire: Secciones destacadas, carruseles o fondos secundarios */
   
   /* Textos y Bordes */
   --color-texto-principal: #243B53;  /* Azul Marino: Títulos y texto principal (alta legibilidad) */
   --color-texto-secundario: #627D98; /* Azul Acero: Subtítulos, iconos y bordes */
   
   /* Acciones / Botones */
-  --color-accion: #48BB78;       /* Azul Eléctrico (Esmeralda): Botón de compra / Resaltes */
-  --color-accion-hover: #38a169; /* Un tono ligeramente más oscuro para cuando pasas el mouse */
+  --color-accion: #48BB78;       /* Esmeralda: Botón de compra / Resaltes */
+  --color-accion-hover: #38a169; /* Tono más oscuro para el hover */
+
+  /* =========================================
+     ✨ ALIAS DE COMPATIBILIDAD (Para evitar que se rompan componentes existentes)
+  ========================================= */
+  --color-primario: var(--color-texto-principal);
+  --color-fondo: var(--color-fondo-principal);
 
   /* =========================================
      TIPOGRAFÍA Y EXTRAS
@@ -29,6 +36,7 @@
 
 /* Aplicamos los estilos base a todo el documento */
 main {
+  /* Comentado provisionalmente por si la imagen tarda en cargar en local, no rompa el layout */
   background-image: url('./img/background.png');
   background-size: cover;
   background-position: center;
@@ -43,29 +51,41 @@ body {
   background-color: var(--color-fondo-principal);
   color: var(--color-texto-principal);
   font-family: var(--fuente-principal);
+  -webkit-font-smoothing: antialiased;
 }
 
+/* Estilo unificado para todas las tarjetas logísticas del front */
 .tarjeta {
   background-color: var(--color-fondo-secundario);
-  border: 1px solid var(--color-texto-secundario);
+  border: 1px solid #E2E8F0; /* Un borde sutil que no compita con el texto */
   border-radius: var(--radio-borde);
   padding: 20px;
   box-shadow: var(--sombra-tarjeta);
 }
 
+/* Botón Esmeralda Logístico unificado */
 .btn-comprar {
   background-color: var(--color-accion);
   color: white; /* El texto blanco contrasta perfecto con el #48BB78 */
   border: none;
   border-radius: var(--radio-borde);
-  padding: 10px 24px;
+  padding: 12px 24px;
   font-weight: 600;
+  font-size: 0.95rem;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .btn-comprar:hover {
   background-color: var(--color-accion-hover);
+  transform: translateY(-1px);
+}
+
+.btn-comprar:active {
+  transform: translateY(0);
 }
 
 .titulo {
@@ -80,9 +100,11 @@ body {
 
 .titulo h1 {
   color : var(--color-fondo-principal);
+  margin: 0 0 0.25rem 0;
 }
 
 .titulo p {
   color : var(--color-fondo-principal);
   opacity: 0.9;
+  margin: 0;
 }
