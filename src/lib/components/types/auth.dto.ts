@@ -1,23 +1,20 @@
 // src/lib/types/auth.dto.ts
 
-/** * Coincide con LoginRequest.java (record)
- */
 export interface LoginRequestDTO {
-    username: string; // Cambiado de 'email' a 'username' según tu record
+    username: string; 
     password: string;
 }
 
-/** * Coincide con LoginResponse.java (record)
- */
 export interface AuthResponseDTO {
     token: string;
     tokenType: string;
     expiresIn: number;
+    tenant: string; // ✨ CRÍTICO: El BFF lo devuelve y lo necesitamos para las rutas
 }
 
 export interface RegisterRequestDTO {
     username: string;
-    email: string;      // Nuevo campo para registro
     password: string;
-    fullName: string;   // Útil para la gestión logística personalizada
+    email?: string;      // Opcional por si el backend muta en el futuro
+    fullName?: string;   // Opcional
 }
