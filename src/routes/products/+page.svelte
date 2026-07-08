@@ -1,22 +1,28 @@
 <script lang="ts">
     import { onMount } from 'svelte';
     import ProductCard from '$lib/components/products/ProductCard.svelte';
-    import { productService } from '$lib/components/services/product.service';
+    import { api } from '$lib/api/client';
+    import { authStore } from '$lib/store/auth';
     import type { ProductResponseDTO } from '$lib/components/types/product.dto';
     
     import Topbar from '$lib/components/layout/TopBar/topbar.svelte';
     import { goto } from '$app/navigation';
 
+    import '$lib/assets/global.css';
+
     let products = $state<ProductResponseDTO[]>([]);
     let isLoading = $state(true);
     let error = $state('');
+
+    // Evaluamos el estado de autenticación de forma reactiva con Runes de Svelte 5
+    let isAuthenticated = $derived(authStore.isAuthenticated);
 
     const links = [
         { label: 'Inicio',    href: '/' },
         { label: 'Productos', href: '/products', active: true },
         { label: 'Nosotros',  href: '/nosotros' },
         { label: 'Contacto',  href: '/contacto'  },
-    ]
+    ];
 
     function handleNav(e: { href: string; label: string }) {
         goto(e.href);
@@ -25,7 +31,23 @@
     async function loadProducts() {
         try {
             isLoading = true;
-            products = await productService.findAll();
+            error = '';
+
+            // Consumimos el endpoint GET /{tenant}/api/products unificado
+            const res = await api.get('/products');
+
+            if (res.error) {
+                if (res.status === 401) {
+                    error = 'Sesión expirada o inválida. Por favor, inicia sesión de nuevo.';
+                } else if (res.status === 403) {
+                    error = 'Acceso denegado: Conflicto de organización (tenant).';
+                } else {
+                    error = res.data?.message || 'Error al cargar los productos del inventario';
+                }
+                return;
+            }
+
+            products = res.data || [];
         } catch (e) {
             if (e instanceof Error) {
                 error = e.message;
@@ -35,6 +57,10 @@
         } finally {
             isLoading = false;
         }
+    }
+
+    function handleLogout() {
+        authStore.logout();
     }
 
     onMount(() => {
@@ -48,12 +74,18 @@
     {/snippet}
 
     {#snippet actions()}
-        <a href="/login" class="btn-comprar" style="text-decoration: none; text-align: center;">
-            Ingresar
-        </a>
-        <a href="/register" class="btn-comprar" style="text-decoration: none; text-align: center;">
-            Registrarse
-        </a>
+        {#if !isAuthenticated}
+            <a href="/login" class="btn-comprar" style="text-decoration: none; text-align: center;">
+                Ingresar
+            </a>
+            <a href="/register" class="btn-comprar" style="text-decoration: none; text-align: center;">
+                Registrarse
+            </a>
+        {:else}
+            <button class="btn-comprar" style="background-color: var(--color-texto-secundario);" onclick={handleLogout}>
+                Cerrar Sesión
+            </button>
+        {/if}
     {/snippet}
 </Topbar> 
 
@@ -69,8 +101,8 @@
             <p>Cargando catálogo...</p>
         </div>
     {:else if error}
-        <div class="status-message error-container">
-            <p class="error-text">error {error}</p>
+        <div class="status-message tarjeta error-container">
+            <p class="error-text">Error: {error}</p>
             <button class="btn-comprar" onclick={loadProducts}>Reintentar</button>
         </div>
     {:else if products.length === 0}
@@ -125,9 +157,8 @@
     }
 
     .error-container {
-        background: #fff5f5;
-        border: 1px solid #feb2b2;
-        border-radius: var(--radio-borde);
+        background-color: #fff5f5; 
+        border-color: #feb2b2;
         padding: 2rem;
     }
 
@@ -137,12 +168,12 @@
         margin-bottom: 1rem;
     }
 
-    /* Animación simple de carga */
+    
     .spinner {
         width: 40px;
         height: 40px;
-        border: 4px solid #f3f3f3;
-        border-top: 4px solid var(--color-primario);
+        border: 4px solid #e2e8f0;
+        border-top: 4px solid var(--color-accion);
         border-radius: 50%;
         animation: spin 1s linear infinite;
         margin-bottom: 1rem;
