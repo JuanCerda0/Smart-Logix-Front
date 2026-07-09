@@ -3,50 +3,51 @@ import { api } from './api.client';
 import type { LoginRequestDTO, RegisterRequestDTO, AuthResponseDTO } from '../types/auth.dto';
 
 class AuthState {
-  #isAuthenticated = $state(!!localStorage.getItem('auth_token'));
-  #tenant = $state(localStorage.getItem('auth_tenant') || '');
+	isAuthenticated: boolean;
+	tenant: string;
 
-  get isAuthenticated() { return this.#isAuthenticated; }
-  get tenant() { return this.#tenant; }
+	constructor() {
+		this.isAuthenticated =
+			typeof localStorage !== 'undefined' && !!localStorage.getItem('auth_token');
+		this.tenant =
+			typeof localStorage !== 'undefined' ? localStorage.getItem('auth_tenant') || '' : '';
+	}
 
-  async login(tenantForm: string, credentials: LoginRequestDTO): Promise<boolean> {
-    // Construimos la ruta dinámica de login para el BFF: /{tenant}/api/auth/login
-    const path = `/${tenantForm}/api/auth/login`;
-    
-    const response = await api.post<AuthResponseDTO>(path, credentials, true);
+	async login(tenantForm: string, credentials: LoginRequestDTO): Promise<boolean> {
+		const path = `/${tenantForm}/api/auth/login`;
 
-    if (response.error || !response.data) {
-      this.logout();
-      throw new Error(response.message || 'Error de autenticación');
-    }
+		const response = await api.post<AuthResponseDTO>(path, credentials, true);
 
-    // Persistencia
-    localStorage.setItem('auth_token', response.data.token);
-    localStorage.setItem('auth_tenant', response.data.tenant);
+		if (response.error || !response.data) {
+			this.logout();
+			throw new Error(response.message || 'Error de autenticación');
+		}
 
-    // Reactividad Runes Svelte 5
-    this.#tenant = response.data.tenant;
-    this.#isAuthenticated = true;
+		localStorage.setItem('auth_token', response.data.token);
+		localStorage.setItem('auth_tenant', response.data.tenant);
 
-    return true;
-  }
+		this.tenant = response.data.tenant;
+		this.isAuthenticated = true;
 
-  async register(tenantForm: string, userData: RegisterRequestDTO): Promise<boolean> {
-    const path = `/${tenantForm}/api/auth/register`;
-    const response = await api.post<void>(path, userData, true);
-    
-    if (response.error) {
-      throw new Error(response.message || 'Error en el registro');
-    }
-    return true;
-  }
+		return true;
+	}
 
-  logout() {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('auth_tenant');
-    this.#isAuthenticated = false;
-    this.#tenant = '';
-  }
+	async register(tenantParam: string, userData: RegisterRequestDTO): Promise<boolean> {
+		const path = `/${tenantParam}/api/auth/register`;
+		const response = await api.post<void>(path, userData, true);
+
+		if (response.error) {
+			throw new Error(response.message || 'Error en el registro');
+		}
+		return true;
+	}
+
+	logout() {
+		localStorage.removeItem('auth_token');
+		localStorage.removeItem('auth_tenant');
+		this.isAuthenticated = false;
+		this.tenant = '';
+	}
 }
 
 export const authService = new AuthState();

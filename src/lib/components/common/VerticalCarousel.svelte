@@ -41,19 +41,16 @@
 <svelte:window bind:scrollY />
 
 {#if isVisible}
-	<div 
+	<div
 		class="floating-carousel-card"
 		transition:fly={{ y: 50, duration: 500 }}
-		onmouseenter={() => isHovered = true}
-		onmouseleave={() => isHovered = false}
+		onmouseenter={() => (isHovered = true)}
+		onmouseleave={() => (isHovered = false)}
 		role="region"
 		aria-label="Noticias y actualizaciones"
 	>
-<div class="carousel-viewport">
-			<div 
-				class="carousel-track" 
-				style="transform: translateY(-{currentIndex * 100}%);"
-			>
+		<div class="carousel-viewport">
+			<div class="carousel-track" style="transform: translateY(-{currentIndex * 100}%);">
 				{#each items as item, index (index)}
 					<div class="carousel-item" aria-hidden={currentIndex !== index}>
 						{#if item.tag}
@@ -69,11 +66,11 @@
 		{#if items.length > 1}
 			<div class="carousel-dots">
 				{#each items as item, index (index)}
-					<button 
-						class="dot" 
+					<button
+						class="dot"
 						class:active={currentIndex === index}
-						onclick={() => currentIndex = index}
-						aria-label="Ir a: {item.title}" 
+						onclick={() => (currentIndex = index)}
+						aria-label="Ir a: {item.title}"
 					></button>
 				{/each}
 			</div>
@@ -93,14 +90,14 @@
 		box-sizing: border-box;
 		border-radius: var(--radio-borde, 8px);
 		font-family: var(--fuente-principal, sans-serif);
-		
+
 		/* Glassmorphism */
 		background: rgba(240, 244, 248, 0.65);
 		backdrop-filter: blur(12px);
 		-webkit-backdrop-filter: blur(12px);
 		border: 1px solid rgba(98, 125, 152, 0.25);
 		box-shadow: 0 10px 25px -5px rgba(36, 59, 83, 0.15);
-		
+
 		display: flex;
 		flex-direction: column;
 		justify-content: space-between;
