@@ -1,21 +1,20 @@
 <script lang="ts">
     import { onMount } from 'svelte';
+    import { goto } from '$app/navigation';
+    import { authService } from '$lib/components/services/auth.service';
+    import { productService } from '$lib/components/services/product.service';
     import ProductCard from '$lib/components/products/ProductCard.svelte';
-    import { api } from '$lib/api/client';
-    import { authStore } from '$lib/store/auth';
+    import Topbar from '$lib/components/layout/TopBar/topbar.svelte';
     import type { ProductResponseDTO } from '$lib/components/types/product.dto';
     
-    import Topbar from '$lib/components/layout/TopBar/topbar.svelte';
-    import { goto } from '$app/navigation';
-
     import '$lib/assets/global.css';
 
     let products = $state<ProductResponseDTO[]>([]);
     let isLoading = $state(true);
     let error = $state('');
 
-    // Evaluamos el estado de autenticación de forma reactiva con Runes de Svelte 5
-    let isAuthenticated = $derived(authStore.isAuthenticated);
+    // ✨ CORREGIDO: Evaluamos usando las Runes nativas del nuevo authService reactivo
+    let isAuthenticated = $derived(authService.isAuthenticated);
 
     const links = [
         { label: 'Inicio',    href: '/' },
@@ -33,37 +32,29 @@
             isLoading = true;
             error = '';
 
-            // Consumimos el endpoint GET /{tenant}/api/products unificado
-            const res = await api.get('/products');
-
-            if (res.error) {
-                if (res.status === 401) {
-                    error = 'Sesión expirada o inválida. Por favor, inicia sesión de nuevo.';
-                } else if (res.status === 403) {
-                    error = 'Acceso denegado: Conflicto de organización (tenant).';
-                } else {
-                    error = res.data?.message || 'Error al cargar los productos del inventario';
-                }
-                return;
-            }
-
-            products = res.data || [];
-        } catch (e) {
-            if (e instanceof Error) {
-                error = e.message;
-            } else {
-                error = 'Ocurrió un error inesperado al cargar los productos';
-            }
+            products = await productService.findAll();
+        } catch (e: any) {
+            // Captura los errores semánticos formateados por nuestro servicio (401, 403, etc.)
+            error = e.message || 'Ocurrió un error inesperado al cargar los productos';
         } finally {
             isLoading = false;
         }
     }
 
     function handleLogout() {
-        authStore.logout();
+        authService.logout();
+        goto('/login');
     }
 
     onMount(() => {
+        // EL GUARDIÁN DE SEGURIDAD CRÍTICO:
+        // Si el usuario no está validado, no lo dejamos cargar productos y lo mandamos al login.
+        if (!authService.isAuthenticated) {
+            goto('/login');
+            return;
+        }
+
+        // Si superó la validación, descargamos el inventario de su tenant
         loadProducts();
     });
 </script>
@@ -83,7 +74,7 @@
             </a>
         {:else}
             <button class="btn-comprar" style="background-color: var(--color-texto-secundario);" onclick={handleLogout}>
-                Cerrar Sesión
+                Cerrar Sesión 
             </button>
         {/if}
     {/snippet}
@@ -92,27 +83,31 @@
 <div class="products-container">
     <header class="catalog-header">
         <h1>Catálogo de Inventario</h1>
-        <p>Gestión de productos y stock en tiempo real</p>
+        <p>Gestión de productos en tiempo real — Organización: <span class="tenant-tag">{authService.tenant}</span></p>
     </header>
 
     {#if isLoading}
         <div class="status-message">
             <div class="spinner"></div>
-            <p>Cargando catálogo...</p>
+            <p>Sincronizando catálogo...</p>
         </div>
     {:else if error}
         <div class="status-message tarjeta error-container">
-            <p class="error-text">Error: {error}</p>
-            <button class="btn-comprar" onclick={loadProducts}>Reintentar</button>
+            <p class="error-text">⚠️ {error}</p>
+            <button class="btn-comprar" onclick={loadProducts}>Reintentar Conexión</button>
         </div>
     {:else if products.length === 0}
-        <div class="status-message">
-            <p>No hay productos disponibles en el inventario.</p>
+        <div class="status-message tarjeta">
+            <p>No hay productos disponibles registrados en el inventario de este tenant.</p>
         </div>
     {:else}
         <div class="products-grid">
             {#each products as product (product.id)}
-                <ProductCard {product} />
+                <ProductCard 
+                    {product} 
+                    onUpdate={loadProducts} 
+                    onDelete={(id) => products = products.filter(p => p.id !== id)} 
+                />
             {/each}
         </div>
     {/if}
@@ -139,6 +134,12 @@
     .catalog-header p {
         color: var(--color-texto-secundario);
         font-size: 1.1rem;
+    }
+
+    .tenant-tag {
+        font-weight: 700;
+        color: var(--color-accion);
+        text-transform: uppercase;
     }
 
     .products-grid {
@@ -168,7 +169,6 @@
         margin-bottom: 1rem;
     }
 
-    
     .spinner {
         width: 40px;
         height: 40px;
