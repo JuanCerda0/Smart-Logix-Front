@@ -26,7 +26,7 @@
 	let { children } = $props();
 </script>
 
-// lib/routes/login/+page.ssvelte
+// lib/routes/login/+page.svelte
 <main class="login-page">
 	<LoginForm onLogin={handleLogin} errorMessage={error} />
 </main>
