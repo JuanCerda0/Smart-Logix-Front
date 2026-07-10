@@ -41,7 +41,6 @@
 				SmartLogix es una empresa de base tecnológica dedicada a desarrollar soluciones innovadoras orientadas a optimizar los procesos de las pymes. 
 				A través de una plataforma escalable, transformamos desafíos complejos en herramientas eficientes, mejorando la rentabilidad y el rendimiento de nuestros clientes.
 			</p>
-			<div class="scroll-indicator">⬇</div>
 		</div>
 	</section>
 
