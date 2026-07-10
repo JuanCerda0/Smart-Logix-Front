@@ -1,4 +1,3 @@
-// lib/routes/login/+page.svelte
 <script lang="ts">
 	import LoginForm from '../../lib/components/auth/LoginForm.svelte';
 	import { authService } from '../../lib/components/services/auth.service';

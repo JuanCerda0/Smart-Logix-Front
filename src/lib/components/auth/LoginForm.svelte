@@ -1,7 +1,7 @@
 <script lang="ts">
 	let { onLogin, errorMessage } = $props();
 
-	let tenant = $state(''); // ✨ CRÍTICO: Necesario para la ruta multi-tenant del BFF
+	let tenant = $state(''); // Necesario para la ruta multi-tenant del BFF
 	let username = $state('');
 	let password = $state('');
 
