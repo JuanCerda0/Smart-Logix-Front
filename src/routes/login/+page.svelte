@@ -2,7 +2,7 @@
 	import LoginForm from '../../lib/components/auth/LoginForm.svelte';
 	import { authService } from '../../lib/components/services/auth.service';
 	import { goto } from '$app/navigation';
-	import '../lib/assets/global.css';
+	import '$lib/assets/global.css';
 
 	let error = $state('');
 
