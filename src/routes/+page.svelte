@@ -13,11 +13,6 @@
 
 	const carouselInfo = [
 		{
-			tag: 'Recuerdo',
-			title: 'Modificaciones',
-			description: 'Si no cambie este mensaje significa que no avance una fegada srry'
-		},
-		{
 			tag: 'Novedad',
 			title: 'Ya poseemos un carrusel',
 			description:
@@ -69,14 +64,15 @@
 	<section class="content-section">
 		<h2>Contenido Principal</h2>
 		<p>
-			Lorem ipsum dolor sit amet, consectetur adipiscing elit... no se que mas sigue solo estoy
-			rellenando
+			En SmartLogix buscamos que cada usuario pueda tener el control total de su pyme y pueda manejar los datos desde cualquier dispositivo en la palma de su mano.
 		</p>
 	</section>
 
 	<section class="content-section darker">
 		<h2>Más funcionalidades</h2>
-		<p>¿la tarjeta se activó de forma reactiva?.</p>
+		<p>
+			Actualmente estas viendo una demo con la cual podras entender como funcionara la pagina y como se veran los visuales 
+		</p>
 	</section>
 
 	<VerticalCarousel items={carouselInfo} />

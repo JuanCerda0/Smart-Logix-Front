@@ -32,7 +32,19 @@
 	{/snippet}
 </Topbar>
 
-<main></main>
+<main>
+
+	<section class="hero-section">
+		<div class="hero-card">
+			<h1>¿Tuviste problemas y no pudiste solucionarlo?</h1>
+			<p>
+				No dudes en contactarnos en SmartLogix nuestra mayor prioridad es que tu pyme funcione, nuestro negocio es que tu negocio progrese.
+			</p>
+			<div class="scroll-indicator">⬇</div>
+		</div>
+	</section>
+
+</main>
 
 <style>
 	main {
